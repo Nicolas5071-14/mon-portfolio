@@ -223,7 +223,7 @@ const Home: React.FC = () => {
             viewport={{ once: true }}
             className="mt-12"
           >
-            <a
+            <motion.a
               href="/mon-portfolio/projects"
               className="inline-flex items-center px-6 py-3 border border-transparent text-lg font-medium rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition-colors"
             >
@@ -231,7 +231,7 @@ const Home: React.FC = () => {
               <svg className="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
-            </a>
+            </motion.a>
           </motion.div>
         </motion.div>
       </div>

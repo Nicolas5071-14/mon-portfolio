@@ -228,7 +228,7 @@ const Projects: React.FC = () => {
                     <h3 className="text-2xl font-semibold text-gray-800 mb-6">
                         Vous avez un projet similaire ?
                     </h3>
-                    <a
+                    <motion.a
                         href="/mon-portfolio/contact"
                         className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all"
                     >
@@ -236,7 +236,7 @@ const Projects: React.FC = () => {
                         <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
-                    </a>
+                    </motion.a>
                 </motion.div>
             </div>
         </div>
