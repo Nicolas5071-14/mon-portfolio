@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FiDownload, FiMail, FiGithub, FiLinkedin, FiCode, FiFacebook } from "react-icons/fi";
 import pdp from '../nicolas-photo.png';
+import AppLink from "../components/AppLink";
 
 const Home: React.FC = () => {
   const technologies = [
@@ -90,15 +91,13 @@ const Home: React.FC = () => {
               <FiDownload className="mr-2" />
               Télécharger mon CV
             </motion.a>
-            <motion.a
-              whileHover={{ y: -3, scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              href="/contact"
+            <AppLink
+              to="/contact"
               className="flex items-center justify-center bg-transparent border-2 border-white px-6 py-3 rounded-lg font-medium hover:bg-white hover:text-blue-600 transition-all"
             >
               <FiMail className="mr-2" />
               Contactez-moi
-            </motion.a>
+            </AppLink>
           </motion.div>
 
           {/* Liens sociaux */}
@@ -223,15 +222,16 @@ const Home: React.FC = () => {
             viewport={{ once: true }}
             className="mt-12"
           >
-            <motion.a
-              href="/projects"
+            <AppLink
+              to="/projects" // Au lieu de "/mon-portfolio/projects"
               className="inline-flex items-center px-6 py-3 border border-transparent text-lg font-medium rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition-colors"
             >
               Voir mes projets
               <svg className="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
-            </motion.a>
+            </AppLink>
+
           </motion.div>
         </motion.div>
       </div>
