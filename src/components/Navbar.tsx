@@ -18,10 +18,10 @@ const Navbar: React.FC = () => {
     }, []);
 
     const navLinks = [
-        { name: "Accueil", path: "/mon-portfolio" },
-        { name: "À propos", path: "/mon-portfolio/about" },
-        { name: "Projets", path: "/mon-portfolio/projects" },
-        { name: "Contact", path: "/mon-portfolio/contact" },
+        { name: "Accueil", path: "/" },
+        { name: "À propos", path: "/about" },
+        { name: "Projets", path: "/projects" },
+        { name: "Contact", path: "/contact" },
     ];
 
     const mobileMenuVariants = {
