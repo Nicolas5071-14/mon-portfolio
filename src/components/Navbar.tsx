@@ -44,7 +44,7 @@ const Navbar: React.FC = () => {
                 <div className="flex justify-between items-center">
                     {/* Logo - Prend moins de place */}
                     <Link
-                        to="/mon-portfolio"
+                        to="/"
                         className="flex-shrink-0 flex items-center space-x-2 z-50"
                         onClick={() => setIsMenuOpen(false)}
                     >
