@@ -7,6 +7,7 @@ import Contact from "./pages/Contact";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
+
 const App: React.FC = () => {
   return (
     <Router>
@@ -14,10 +15,10 @@ const App: React.FC = () => {
         <Navbar />
         <main className="flex-grow">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/contact" element={<Contact />} />
+            <Route path="/mon-portfolio/" element={<Home />} />
+            <Route path="/mon-portfolio/about" element={<About />} />
+            <Route path="/mon-portfolio/projects" element={<Projects />} />
+            <Route path="/mon-portfolio/contact" element={<Contact />} />
           </Routes>
         </main>
         <Footer />
