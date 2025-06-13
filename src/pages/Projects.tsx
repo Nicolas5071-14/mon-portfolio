@@ -229,7 +229,7 @@ const Projects: React.FC = () => {
                         Vous avez un projet similaire ?
                     </h3>
                     <motion.a
-                        href="/mon-portfolio/contact"
+                        href="/contact"
                         className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all"
                     >
                         Discutons-en

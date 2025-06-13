@@ -93,7 +93,7 @@ const Home: React.FC = () => {
             <motion.a
               whileHover={{ y: -3, scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
-              href="/mon-portfolio/contact"
+              href="/contact"
               className="flex items-center justify-center bg-transparent border-2 border-white px-6 py-3 rounded-lg font-medium hover:bg-white hover:text-blue-600 transition-all"
             >
               <FiMail className="mr-2" />
@@ -224,7 +224,7 @@ const Home: React.FC = () => {
             className="mt-12"
           >
             <motion.a
-              href="/mon-portfolio/projects"
+              href="/projects"
               className="inline-flex items-center px-6 py-3 border border-transparent text-lg font-medium rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition-colors"
             >
               Voir mes projets
