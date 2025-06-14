@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://nicolas5071-14.github.io/mon-portfolio/",
+  "homepage": "https://nicolas5071-14.portfolio/",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",

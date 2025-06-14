@@ -87,7 +87,7 @@ const Navbar: React.FC = () => {
                         <motion.a
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            href="/mon-portfolio/Ramahalefitra_a_Nicolas_cv.pdf"
+                            href="/Ramahalefitra_a_Nicolas_cv.pdf"
                             download
                             className="flex items-center bg-purple-800 text-orange-100 px-3 py-1.5 rounded-lg font-medium text-sm shadow-sm hover:bg-purple-900 transition-all whitespace-nowrap"
                         >

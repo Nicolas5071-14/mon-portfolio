@@ -1,8 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import ProjectCard from "../components/ProjectCard";
-import AppLink from "../components/AppLink";
-
 // SVG Components pour chaque projet
 const UrbanSvg = () => (
   <svg viewBox="0 0 200 200" className="w-full h-full">
@@ -85,7 +83,7 @@ const Projects: React.FC = () => {
             technologies: ["Node.js", "React", "PostGIS", "QGIS", "GeoJSON"],
             svg: <UrbanSvg />,
             githubUrl: "https://github.com/Nicolas5071-14/urbanisme",
-            demoUrl: "#",
+            demoUrl: "",
             date: "Mars 2025",
             client: "PNUD & AGVM"
         },
@@ -131,8 +129,8 @@ const Projects: React.FC = () => {
             ],
             technologies: ["Kotlin", "Java", "PostgreSQL", "Firebase"],
             svg: <CarSharingSvg />,
-            githubUrl: "#",
-            demoUrl: "#",
+            githubUrl: "",
+            demoUrl: "",
             date: "Nov 2024"
         },
         {
@@ -147,8 +145,8 @@ const Projects: React.FC = () => {
             ],
             technologies: ["C#", ".NET", "SQL Server", "Azure"],
             svg: <HotelSvg />,
-            githubUrl: "#",
-            demoUrl: "#",
+            githubUrl: "",
+            demoUrl: "",
             date: "Jan 2022"
         },
         {
@@ -163,8 +161,8 @@ const Projects: React.FC = () => {
             ],
             technologies: ["Node.js", "Express.Js", "MySQL", "React.js"],
             svg: <PharmacySvg />,
-            githubUrl: "#",
-            demoUrl: "#",
+            githubUrl: "",
+            demoUrl: "",
             date: "Août 2023"
         },
         {
@@ -179,8 +177,8 @@ const Projects: React.FC = () => {
             ],
             technologies: ["Java EE", "MySQL", "JasperReports", "PrimeFaces"],
             svg: <StudentSvg />,
-            githubUrl: "#",
-            demoUrl: "#",
+            githubUrl: "",
+            demoUrl: "",
             date: "Mai 2023"
         }
     ];
@@ -229,15 +227,15 @@ const Projects: React.FC = () => {
                     <h3 className="text-2xl font-semibold text-gray-800 mb-6">
                         Vous avez un projet similaire ?
                     </h3>
-                    <AppLink
-                        to="/contact"
+                    <a
+                        href="/contact"
                         className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all"
                     >
                         Discutons-en
                         <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
-                    </AppLink>
+                    </a>
                 </motion.div>
             </div>
         </div>
