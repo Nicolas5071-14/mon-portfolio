@@ -9,7 +9,7 @@ import Footer from "./components/Footer";
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter basename="/">
+    <BrowserRouter basename="/mon-portfolio">
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-grow">

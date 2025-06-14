@@ -7,9 +7,9 @@ const AppLink: React.FC<{ to: string; className?: string; children: React.ReactN
     children
 }) => {
     // En développement, utilisez le chemin normal
-    // En production, préfixez avec process.env.PUBLIC_URL si nécessaire
-    const path = process.env.NODE_ENV === 'production'
-        ? `${process.env.PUBLIC_URL}${to}`
+    // En production, préfixez avec import.meta.env.BASE_URL
+    const path = import.meta.env.PROD
+        ? `${import.meta.env.BASE_URL}${to}`.replace(/\/\//g, '/')
         : to;
 
     return (
