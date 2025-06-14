@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
+// components/CustomLink.tsx
+import { Link } from 'react-router-dom';
 
 const CustomLink = ({ to, ...props }: { to: string } & React.ComponentProps<typeof Link>) => {
-  const basename = "/mon-portfolio";
-  const normalizedTo = `${basename}${to}`.replace(/\/+/g, '/');
-  return <Link to={normalizedTo} {...props} />;
+  return <Link to={to} {...props} />;
 };
-export default CustomLink
+
+export default CustomLink;
