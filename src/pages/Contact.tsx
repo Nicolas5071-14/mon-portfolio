@@ -1,227 +1,312 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { FiSend, FiUser, FiMail, FiMessageSquare, FiPhone, FiMapPin } from "react-icons/fi";
+import { FiSend, FiUser, FiMail, FiMessageSquare, FiPhone, FiMapPin, FiGithub, FiLinkedin, FiFacebook, FiCheck } from "react-icons/fi";
 
 const Contact: React.FC = () => {
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        message: ""
-    });
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [focused, setFocused] = useState<string | null>(null);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-        
-        // Simulation d'envoi
-        setTimeout(() => {
-            const mailtoLink = `mailto:ramahalefitra.abelson.nicolas@gmail.com?subject=Message de ${encodeURIComponent(formData.name)} (${encodeURIComponent(formData.email)})&body=${encodeURIComponent(formData.message)}`;
-            window.location.href = mailtoLink;
-            
-            setIsSubmitting(false);
-            setSubmitSuccess(true);
-            setFormData({ name: "", email: "", message: "" });
-            
-            // Réinitialiser le message de succès après 5s
-            setTimeout(() => setSubmitSuccess(false), 5000);
-        }, 1500);
-    };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setTimeout(() => {
+      const subj = formData.subject
+        ? `[${formData.subject}] Message de ${formData.name} (${formData.email})`
+        : `Message de ${formData.name} (${formData.email})`;
+      const mailtoLink = `mailto:ramahalefitra.abelson.nicolas@gmail.com?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(formData.message)}`;
+      window.location.href = mailtoLink;
+      setIsSubmitting(false);
+      setSubmitSuccess(true);
+      setFormData({ name: "", email: "", subject: "", message: "" });
+      setTimeout(() => setSubmitSuccess(false), 5000);
+    }, 1500);
+  };
 
-    return (
-        <section className="min-h-screen bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-600 py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
-            <div className="w-full max-w-6xl mx-auto">
-                <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="text-center mb-12"
-                >
-                    <h2 className="text-4xl font-extrabold text-white sm:text-5xl">
-                        Contactez-moi
-                    </h2>
-                    <p className="mt-3 text-xl text-blue-100">
-                        Discutons de votre projet ou opportunité
-                    </p>
-                </motion.div>
+  const inputClass = (field: string) =>
+    `w-full bg-white/5 border rounded-xl px-4 py-3 text-white placeholder-white/30 text-sm outline-none transition-all duration-200 ${
+      focused === field
+        ? "border-indigo-500 shadow-[0_0_0_3px_rgba(99,102,241,0.15)]"
+        : "border-white/10 hover:border-white/20"
+    }`;
 
-                <div className="flex flex-col lg:flex-row gap-8 justify-center">
-                    {/* Formulaire - Largeur réduite pour meilleur centrage */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                        className="w-full lg:w-1/2 max-w-2xl bg-white p-8 rounded-2xl shadow-xl"
-                    >
-                        {submitSuccess && (
-                            <motion.div
-                                initial={{ opacity: 0, y: -20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="mb-6 p-4 bg-green-100 text-green-700 rounded-lg"
-                            >
-                                Message envoyé avec succès ! Je vous répondrai dès que possible.
-                            </motion.div>
-                        )}
+  const socials = [
+    { href: "https://github.com/Nicolas5071-14", icon: <FiGithub />, label: "GitHub", handle: "@Nicolas5071-14" },
+    { href: "https://www.linkedin.com/in/nicolas-abelson-ramahalefitra-7958652bb", icon: <FiLinkedin />, label: "LinkedIn", handle: "Nicolas Abelson" },
+    { href: "https://www.facebook.com/Nics.zg", icon: <FiFacebook />, label: "Facebook", handle: "Nics.zg" },
+  ];
 
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="space-y-2">
-                                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                                    Nom complet
-                                </label>
-                                <div className="relative">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <FiUser className="h-5 w-5 text-gray-400" />
-                                    </div>
-                                    <input
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        required
-                                        placeholder="Votre nom ou email de votre entreprise"
-                                        className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                            </div>
+  return (
+    <section className="min-h-screen bg-[#0d0b1e] py-24 px-4 sm:px-6 lg:px-8 flex items-center"
+      style={{ fontFamily: "'Syne','DM Sans',sans-serif" }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+        .glass { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(12px); }
+        .info-row { display: flex; align-items: flex-start; gap: 1rem; }
+        .info-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .section-label { font-family: 'Syne',sans-serif; letter-spacing: 0.15em; text-transform: uppercase; font-size: 0.75rem; }
+      `}</style>
 
-                            <div className="space-y-2">
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                    Adresse email 
-                                </label>
-                                <div className="relative">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <FiMail className="h-5 w-5 text-gray-400" />
-                                    </div>
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        required
-                                        placeholder="votre@email.com ou email de votre entreprise"
-                                        className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                            </div>
+      <div className="w-full max-w-6xl mx-auto" style={{
+        background: "radial-gradient(ellipse at 70% 20%, rgba(99,102,241,0.15) 0%, transparent 50%), radial-gradient(ellipse at 20% 80%, rgba(139,92,246,0.1) 0%, transparent 50%)"
+      }}>
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="w-8 h-px bg-indigo-500" />
+            <span className="section-label text-indigo-400">Contact</span>
+            <div className="w-8 h-px bg-indigo-500" />
+          </div>
+          <h2 className="text-4xl md:text-5xl font-black text-white mb-4" style={{ fontFamily: "'Syne',sans-serif", letterSpacing: "-0.02em" }}>
+            Travaillons <span className="text-indigo-400">Ensemble</span>
+          </h2>
+          <p className="text-white/50 text-lg max-w-xl mx-auto" style={{ fontFamily: "'DM Sans',sans-serif" }}>
+            Vous avez un projet ambitieux ? Discutons-en et construisons quelque chose de grand.
+          </p>
+        </motion.div>
 
-                            <div className="space-y-2">
-                                <label htmlFor="message" className="block text-sm font-medium text-gray-700">
-                                    Message
-                                </label>
-                                <div className="relative">
-                                    <div className="absolute top-3 left-3">
-                                        <FiMessageSquare className="h-5 w-5 text-gray-400" />
-                                    </div>
-                                    <textarea
-                                        id="message"
-                                        name="message"
-                                        required
-                                        rows={5}
-                                        placeholder="Décrivez votre projet ou demande..."
-                                        className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                        value={formData.message}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                            </div>
+        <div className="grid lg:grid-cols-5 gap-8">
 
-                            <div className="pt-4">
-                                <motion.button
-                                    type="submit"
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    disabled={isSubmitting}
-                                    className={`w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-medium text-white ${isSubmitting ? 'bg-blue-400' : 'bg-blue-600 hover:bg-blue-700'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
-                                >
-                                    {isSubmitting ? (
-                                        <>
-                                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                            </svg>
-                                            Envoi en cours...
-                                        </>
-                                    ) : (
-                                        <>
-                                            <FiSend className="mr-2 h-5 w-5" />
-                                            Envoyer le message
-                                        </>
-                                    )}
-                                </motion.button>
-                            </div>
-                        </form>
-                    </motion.div>
-
-                    {/* Informations de contact - Largeur réduite pour meilleur centrage */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5, delay: 0.4 }}
-                        className="w-full lg:w-1/2 max-w-2xl bg-gradient-to-br from-blue-600 to-indigo-700 p-8 rounded-2xl shadow-xl text-white"
-                    >
-                        <h3 className="text-2xl font-bold mb-6">Mes coordonnées</h3>
-                        
-                        <div className="space-y-6">
-                            <div className="flex items-start">
-                                <div className="flex-shrink-0 bg-blue-500 rounded-lg p-3">
-                                    <FiMail className="h-6 w-6" />
-                                </div>
-                                <div className="ml-4">
-                                    <h4 className="text-lg font-semibold">Email</h4>
-                                    <a href="mailto:ramahalefitra.abelson.nicolas@gmail.com" className="text-blue-100 hover:text-white transition-colors">
-                                        ramahalefitra.abelson.nicolas@gmail.com
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div className="flex items-start">
-                                <div className="flex-shrink-0 bg-blue-500 rounded-lg p-3">
-                                    <FiPhone className="h-6 w-6" />
-                                </div>
-                                <div className="ml-4">
-                                    <h4 className="text-lg font-semibold">Téléphone</h4>
-                                    <a href="tel:+261348960049" className="text-blue-100 hover:text-white transition-colors">
-                                        +261 34 89 600 49
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div className="flex items-start">
-                                <div className="flex-shrink-0 bg-blue-500 rounded-lg p-3">
-                                    <FiMapPin className="h-6 w-6" />
-                                </div>
-                                <div className="ml-4">
-                                    <h4 className="text-lg font-semibold">Localisation</h4>
-                                    <p className="text-blue-100">
-                                        Ankadimbahoaka, Antananarivo 101<br />Madagascar
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className="pt-4">
-                                <h4 className="text-lg font-semibold mb-3">Disponibilité</h4>
-                                <div className="flex items-center">
-                                    <span className="h-3 w-3 bg-green-400 rounded-full mr-2"></span>
-                                    <span>Disponible pour de nouvelles opportunités</span>
-                                </div>
-                            </div>
-                        </div>
-                    </motion.div>
+          {/* Form — 3 cols */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="lg:col-span-3 glass rounded-2xl p-8"
+          >
+            {submitSuccess && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-6 p-4 rounded-xl flex items-center gap-3"
+                style={{ background: "rgba(16,185,129,0.15)", border: "1px solid rgba(16,185,129,0.3)" }}
+              >
+                <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0">
+                  <FiCheck className="text-white w-4 h-4" />
                 </div>
+                <p className="text-emerald-300 text-sm" style={{ fontFamily: "'DM Sans',sans-serif" }}>
+                  Message envoyé ! Je vous répondrai dans les plus brefs délais.
+                </p>
+              </motion.div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label className="block text-xs font-semibold text-white/50 mb-2 uppercase tracking-wider" style={{ fontFamily: "'Syne',sans-serif" }}>
+                    Nom complet
+                  </label>
+                  <div className="relative">
+                    <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
+                    <input
+                      type="text" name="name" required
+                      placeholder="Votre nom"
+                      className={inputClass("name") + " pl-10"}
+                      style={{ fontFamily: "'DM Sans',sans-serif" }}
+                      value={formData.name}
+                      onChange={handleChange}
+                      onFocus={() => setFocused("name")}
+                      onBlur={() => setFocused(null)}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-white/50 mb-2 uppercase tracking-wider" style={{ fontFamily: "'Syne',sans-serif" }}>
+                    Email
+                  </label>
+                  <div className="relative">
+                    <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
+                    <input
+                      type="email" name="email" required
+                      placeholder="votre@email.com"
+                      className={inputClass("email") + " pl-10"}
+                      style={{ fontFamily: "'DM Sans',sans-serif" }}
+                      value={formData.email}
+                      onChange={handleChange}
+                      onFocus={() => setFocused("email")}
+                      onBlur={() => setFocused(null)}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-white/50 mb-2 uppercase tracking-wider" style={{ fontFamily: "'Syne',sans-serif" }}>
+                  Sujet
+                </label>
+                <select
+                  name="subject"
+                  className={inputClass("subject")}
+                  style={{ fontFamily: "'DM Sans',sans-serif" }}
+                  value={formData.subject}
+                  onChange={handleChange}
+                  onFocus={() => setFocused("subject")}
+                  onBlur={() => setFocused(null)}
+                >
+                  <option value="" style={{ background: "#1a1730" }}>Sélectionner un sujet</option>
+                  <option value="Projet Web" style={{ background: "#1a1730" }}>Projet Web</option>
+                  <option value="Projet Mobile" style={{ background: "#1a1730" }}>Projet Mobile</option>
+                  <option value="Projet SIG/Géomatique" style={{ background: "#1a1730" }}>Projet SIG / Géomatique</option>
+                  <option value="Mission Freelance" style={{ background: "#1a1730" }}>Mission Freelance</option>
+                  <option value="Opportunité d'emploi" style={{ background: "#1a1730" }}>Opportunité d'emploi</option>
+                  <option value="Autre" style={{ background: "#1a1730" }}>Autre</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-white/50 mb-2 uppercase tracking-wider" style={{ fontFamily: "'Syne',sans-serif" }}>
+                  Message
+                </label>
+                <div className="relative">
+                  <FiMessageSquare className="absolute left-3 top-3.5 w-4 h-4 text-white/30" />
+                  <textarea
+                    name="message" required rows={5}
+                    placeholder="Décrivez votre projet ou votre demande..."
+                    className={inputClass("message") + " pl-10 resize-none"}
+                    style={{ fontFamily: "'DM Sans',sans-serif" }}
+                    value={formData.message}
+                    onChange={handleChange}
+                    onFocus={() => setFocused("message")}
+                    onBlur={() => setFocused(null)}
+                  />
+                </div>
+              </div>
+
+              <motion.button
+                type="submit"
+                whileHover={{ scale: 1.02, y: -1 }}
+                whileTap={{ scale: 0.98 }}
+                disabled={isSubmitting}
+                className="w-full flex justify-center items-center gap-3 py-4 rounded-xl font-bold text-white text-sm transition-all"
+                style={{
+                  background: isSubmitting ? "rgba(99,102,241,0.5)" : "linear-gradient(135deg,#6366f1,#8b5cf6)",
+                  fontFamily: "'Syne',sans-serif",
+                  boxShadow: "0 4px 24px rgba(99,102,241,0.3)",
+                }}
+              >
+                {isSubmitting ? (
+                  <>
+                    <svg className="animate-spin w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    Envoi en cours...
+                  </>
+                ) : (
+                  <>
+                    <FiSend className="w-4 h-4" />
+                    Envoyer le message
+                  </>
+                )}
+              </motion.button>
+            </form>
+          </motion.div>
+
+          {/* Info panel — 2 cols */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="lg:col-span-2 flex flex-col gap-6"
+          >
+            {/* Coordonnées */}
+            <div className="glass rounded-2xl p-6 flex-1">
+              <h3 className="text-lg font-black text-white mb-6" style={{ fontFamily: "'Syne',sans-serif" }}>Coordonnées</h3>
+              <div className="space-y-5">
+                {[
+                  {
+                    icon: <FiMail className="w-5 h-5" />,
+                    label: "Email",
+                    value: "ramahalefitra.abelson.nicolas@gmail.com",
+                    href: "mailto:ramahalefitra.abelson.nicolas@gmail.com",
+                    color: "from-indigo-500 to-violet-500",
+                  },
+                  {
+                    icon: <FiPhone className="w-5 h-5" />,
+                    label: "Téléphone",
+                    value: "+261 34 89 600 49 · +261 33 91 811 19",
+                    href: "tel:+261348960049",
+                    color: "from-blue-500 to-cyan-500",
+                  },
+                  {
+                    icon: <FiMapPin className="w-5 h-5" />,
+                    label: "Localisation",
+                    value: "Antananarivo 101, Madagascar",
+                    color: "from-emerald-500 to-teal-500",
+                  },
+                ].map((item, i) => (
+                  <div key={i} className="info-row">
+                    <div className={`info-icon bg-gradient-to-br ${item.color}`}>
+                      <span className="text-white">{item.icon}</span>
+                    </div>
+                    <div>
+                      <p className="text-white/40 text-xs mb-0.5" style={{ fontFamily: "'DM Sans',sans-serif" }}>{item.label}</p>
+                      {item.href ? (
+                        <a href={item.href} className="text-white text-sm hover:text-indigo-300 transition-colors break-all" style={{ fontFamily: "'DM Sans',sans-serif" }}>
+                          {item.value}
+                        </a>
+                      ) : (
+                        <p className="text-white text-sm" style={{ fontFamily: "'DM Sans',sans-serif" }}>{item.value}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-        </section>
-    );
+
+            {/* Disponibilité */}
+            <div className="glass rounded-2xl p-6" style={{ background: "rgba(16,185,129,0.06)", borderColor: "rgba(16,185,129,0.15)" }}>
+              <div className="flex items-center gap-3 mb-2">
+                <span className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse" />
+                <h4 className="text-emerald-300 font-bold text-sm" style={{ fontFamily: "'Syne',sans-serif" }}>Disponible</h4>
+              </div>
+              <p className="text-white/50 text-sm" style={{ fontFamily: "'DM Sans',sans-serif" }}>
+                Ouvert aux missions freelance, stages et opportunités d'emploi en remote ou sur site.
+              </p>
+            </div>
+
+            {/* Réseaux sociaux */}
+            <div className="glass rounded-2xl p-6">
+              <h3 className="text-sm font-black text-white mb-4" style={{ fontFamily: "'Syne',sans-serif" }}>Réseaux</h3>
+              <div className="space-y-3">
+                {socials.map((s, i) => (
+                  <motion.a
+                    key={i}
+                    whileHover={{ x: 4 }}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-3 rounded-xl transition-all"
+                    style={{ background: "rgba(255,255,255,0.04)" }}
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white text-sm">
+                      {s.icon}
+                    </div>
+                    <div>
+                      <p className="text-white text-sm font-semibold" style={{ fontFamily: "'Syne',sans-serif" }}>{s.label}</p>
+                      <p className="text-white/40 text-xs" style={{ fontFamily: "'DM Sans',sans-serif" }}>{s.handle}</p>
+                    </div>
+                  </motion.a>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Contact;
